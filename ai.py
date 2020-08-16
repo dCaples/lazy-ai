@@ -12,10 +12,7 @@ class node:
     def sigmoid(self, x):
         return 1 / (1 + math.exp(-x))
     def randomize(self, max_change):
-        larger_random = random.choice([True, False])
-        print(larger_random)
-        if(larger_random == True):
-            pass
-
+        change = random.uniform(max_change*-1,max_change)
+        self.bias = self.bias + change
 nuron = node()
-nuron.calc_output(12)
+nuron.randomize(3)
