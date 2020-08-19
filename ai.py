@@ -1,13 +1,11 @@
 import random
 import math
-#nuron class
 class Nuron:
     def __init__(self):
         self.bias = 0.5
         self.value = 0
-    def calc_output(self, input):
-        biased_input = input*self.bias
-        self.value = self.sigmoid(biased_input)
+    def calc_output(self, node_input):
+        self.value = self.sigmoid(node_input)+self.bias
         return(self.value)
     def sigmoid(self, x):
         return 1 / (1 + math.exp(-x))
@@ -30,10 +28,23 @@ class Layer:
     def randomize_layer(self, max_change):
         for x in range(len(self.nurons_in_layer)):
             self.nurons_in_layer[x].randomize(max_change)
+    def get_largest_output(self):
+        largest_output = self.nurons_in_layer[0]
+        largest_output_position = 0
+        for x in range(len(self.nurons_in_layer)):
+            if(self.nurons_in_layer[x].value>largest_output.value):
+                largest_output = self.nurons_in_layer[x]
+                largest_output_position = x
+        return(largest_output_position)
+    def print_outputs(self):
+        for x in range (len(self.nurons_in_layer)):
+            print(x, self.nurons_in_layer[x].value)
 
-TestLayer = Layer(5)
-TestLayer.randomize_layer(.5)
-print(TestLayer.get_layer_total(10))
-TestNode = Nuron()
-TestNode.bias = -10
-print(TestNode.calc_output(1))
+class Brain:
+    def __init__(self, hidden_layers, nodes_in_layer, end_layer_nodes):
+        pass
+LayerTest = Layer(3)
+LayerTest.randomize_layer(0.5)
+LayerTest.get_layer_total(4)
+LayerTest.print_outputs()
+print(LayerTest.get_largest_output())
