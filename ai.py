@@ -7,6 +7,9 @@ class Nuron:
     def calc_output(self, node_input):
         self.value = self.sigmoid(node_input)+self.bias
         return(self.value)
+    def calc_output_no_sigmoid(self, node_input):
+            self.value = node_input+self.bias
+            return(self.value)
     def sigmoid(self, x):
         return 1 / (1 + math.exp(-x))
     def randomize(self, max_change):
@@ -24,7 +27,12 @@ class Layer:
         for x in range(len(self.nurons_in_layer)):
             self.layer_total = self.layer_total+self.nurons_in_layer[x].calc_output(layer_input)
         return(self.layer_total)
-
+    def get_layer_total_from_array(self, input_array):
+        self.layer_total = 0
+        for x in range(len(input_array)):
+            self.nurons_in_layer[x].calc_output_no_sigmoid(input_array[x])
+            self.layer_total = self.layer_total+self.nurons_in_layer[x].value
+        return(self.layer_total)
     def randomize_layer(self, max_change):
         for x in range(len(self.nurons_in_layer)):
             self.nurons_in_layer[x].randomize(max_change)
@@ -36,15 +44,27 @@ class Layer:
                 largest_output = self.nurons_in_layer[x]
                 largest_output_position = x
         return(largest_output_position)
-    def print_outputs(self):
+    def print_data(self):
+        print("printing outputs!")
         for x in range (len(self.nurons_in_layer)):
+            print("the value of ", x,"is ", self.nurons_in_layer[x].value)
             print(x, self.nurons_in_layer[x].value)
 
 class Brain:
-    def __init__(self, hidden_layers, nodes_in_layer, end_layer_nodes):
+    def __init__(self, layers_to_create):
+        self.layers_array = []
+        for x in range(len(layers_to_create)):
+            self.layers_array.append(Layer(layers_to_create[x]))
+    def randomize_brain(self, max_change):
+        for x in range(len(self.layers_array)):
+            self.layers_array[x].randomize_layer(max_change)
+    def print_layers(self):
+        for x in range(len(self.layers_array)):
+            self.layers_array[x].print_data()
+    def calculate(self, input_data):
         pass
-LayerTest = Layer(3)
-LayerTest.randomize_layer(0.5)
-LayerTest.get_layer_total(4)
-LayerTest.print_outputs()
-print(LayerTest.get_largest_output())
+BrainTest = Brain([3,2,3])
+BrainTest.print_layers()
+BrainTest.randomize_brain(0.5)
+BrainTest.print_layers()
+
