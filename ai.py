@@ -60,9 +60,7 @@ class Layer:
 
 class Brain:
     def __init__(self, layers_to_create):
-        self.reward = 0
         self.layers_array = []
-        self.output = 0
         for x in range(len(layers_to_create)):
             self.layers_array.append(Layer(layers_to_create[x]))
     def randomize_brain(self, max_change):
@@ -72,20 +70,9 @@ class Brain:
         for x in range(len(self.layers_array)):
             self.layers_array[x].print_data()
     def calculate(self, input_data):
-        self.layers_array[0].get_layer_total_from_array(input_data)
-        for x in range(len(self.layers_array)):
-           # dont do this for the first one, which we allready calculated
-            if(x == 0):
-                continue
-            #get the layer total of the previous layer and calculate this one
-            self.layers_array[x].get_layer_total(self.layers_array[x-1].layer_total)
-        self.output = self.layers_array[-1].get_largest_output()
-        return self.output
-class Evolution:
-    def __init__(self, layers_to_create, brains_in_evolution):
-        for x in range(brains_in_evolution):
-            print("hello:")
-BrainTest = Brain([3,3,3])
+        pass
+BrainTest = Brain([3,2,3])
+BrainTest.print_layers()
 BrainTest.randomize_brain(0.5)
-print(BrainTest.calculate([1,0,0]))
+BrainTest.print_layers()
 
