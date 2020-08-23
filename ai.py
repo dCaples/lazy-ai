@@ -7,7 +7,7 @@ import math
     #2. sigmoid
     #3 weight the value. 
     #theis is the output of the node. The values are all added together to make the input of the next node
-class Nuron:
+class node:
     def __init__(self):
         self.bias = 0.5
         self.weight = 1
@@ -16,7 +16,6 @@ class Nuron:
         self.value = self.sigmoid(node_input)+self.bias
         return(self.value)
     def calc_output_no_sigmoid(self, node_input):
-            self.value = node_input+b
             self.value = node_input+self.bias
             return(self.value)
     def sigmoid(self, x):
@@ -28,36 +27,36 @@ class Nuron:
 class Layer:
     def __init__(self, layer_size):
         self.layer_total = 0
-        self.nurons_in_layer = []
+        self.nodes_in_layer = []
         for x in range(layer_size):
-            self.nurons_in_layer.append(Nuron())
+            self.nodes_in_layer.append(node())
     def get_layer_total(self, layer_input):
         self.layer_total = 0
-        for x in range(len(self.nurons_in_layer)):
-            self.layer_total = self.layer_total+self.nurons_in_layer[x].calc_output(layer_input)
+        for x in range(len(self.nodes_in_layer)):
+            self.layer_total = self.layer_total+self.nodes_in_layer[x].calc_output(layer_input)
         return(self.layer_total)
     def get_layer_total_from_array(self, input_array):
         self.layer_total = 0
         for x in range(len(input_array)):
-            self.nurons_in_layer[x].calc_output_no_sigmoid(input_array[x])
-            self.layer_total = self.layer_total+self.nurons_in_layer[x].value
+            self.nodes_in_layer[x].calc_output_no_sigmoid(input_array[x])
+            self.layer_total = self.layer_total+self.nodes_in_layer[x].value
         return(self.layer_total)
     def randomize_layer(self, max_change):
-        for x in range(len(self.nurons_in_layer)):
-            self.nurons_in_layer[x].randomize(max_change)
+        for x in range(len(self.nodes_in_layer)):
+            self.nodes_in_layer[x].randomize(max_change)
     def get_largest_output(self):
-        largest_output = self.nurons_in_layer[0]
+        largest_output = self.nodes_in_layer[0]
         largest_output_position = 0
-        for x in range(len(self.nurons_in_layer)):
-            if(self.nurons_in_layer[x].value>largest_output.value):
-                largest_output = self.nurons_in_layer[x]
+        for x in range(len(self.nodes_in_layer)):
+            if(self.nodes_in_layer[x].value>largest_output.value):
+                largest_output = self.nodes_in_layer[x]
                 largest_output_position = x
         return(largest_output_position)
     def print_data(self):
         print("printing outputs!")
-        for x in range (len(self.nurons_in_layer)):
-            print("the value of ", x,"is ", self.nurons_in_layer[x].value)
-            print(x, self.nurons_in_layer[x].value)
+        for x in range (len(self.nodes_in_layer)):
+            print("the value of ", x,"is ", self.nodes_in_layer[x].value)
+            print(x, self.nodes_in_layer[x].value)
 
 class Brain:
     def __init__(self, layers_to_create):
