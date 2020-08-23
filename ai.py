@@ -1,13 +1,22 @@
 import random
 import math
+# what I need to do:
+#1. change it to node not neuron
+#2, make it so it does these steps:
+    #1. bias (subtract a number from input
+    #2. sigmoid
+    #3 weight the value. 
+    #theis is the output of the node. The values are all added together to make the input of the next node
 class Nuron:
     def __init__(self):
         self.bias = 0.5
+        self.weight = 1
         self.value = 0
-    def calc_output(self, node_input):
+    def calc_output(self, input):
         self.value = self.sigmoid(node_input)+self.bias
         return(self.value)
     def calc_output_no_sigmoid(self, node_input):
+            self.value = node_input+b
             self.value = node_input+self.bias
             return(self.value)
     def sigmoid(self, x):
